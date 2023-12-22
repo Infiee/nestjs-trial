@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  nickname  String?
+  email     String?  @unique
+  phone     String   @unique
+  status    Status?  @default(ENABLE)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // createdAt DateTime @default(dbgenerated("extract(epoch from now())"))
+  // createdAt DateTime @default(now()) @map("create_time") @db.Timestamp(0)
+  // createdAt DateTime @default(dbgenerated("unix_timestamp(now())")) @map("create_time")
+  // updatedAt DateTime @updatedAt
+
+  // createdAt DateTime @default(dbgenerated("NOW()")) @db.DateTime
+  // updatedAt DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
+
+  @@map("user")
+}
+
+enum Status {
+  DSIABLE
+  ENABLE
+  DELETE
+}
