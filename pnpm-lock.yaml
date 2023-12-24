@@ -6,6 +6,8 @@ settings:
 
 importers:
 
+  .: {}
+
   packages/excample-drizzle-orm:
     dependencies:
       '@knaadh/nestjs-drizzle-mysql2':
@@ -232,6 +234,9 @@ importers:
       '@nestjs/core':
         specifier: ^10.0.0
         version: 10.3.0(@nestjs/common@10.3.0)(@nestjs/platform-express@10.3.0)(reflect-metadata@0.1.14)(rxjs@7.8.1)
+      '@nestjs/mapped-types':
+        specifier: '*'
+        version: 2.0.4(@nestjs/common@10.3.0)(reflect-metadata@0.1.14)
       '@nestjs/platform-express':
         specifier: ^10.0.0
         version: 10.3.0(@nestjs/common@10.3.0)(@nestjs/core@10.3.0)
@@ -4667,7 +4672,7 @@ packages:
       semver: 7.5.4
       tapable: 2.2.1
       typescript: 5.2.2
-      webpack: 5.89.0
+      webpack: 5.89.0(esbuild@0.19.10)
     dev: true
 
   /form-data@4.0.0:
@@ -7418,7 +7423,7 @@ packages:
       semver: 7.5.4
       source-map: 0.7.4
       typescript: 5.3.3
-      webpack: 5.89.0
+      webpack: 5.89.0(esbuild@0.19.10)
     dev: true
 
   /ts-morph@20.0.0:

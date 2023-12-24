@@ -7,23 +7,25 @@ import {
 } from 'nestjs-prisma';
 import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionFilter } from './filters/all-exception.filter';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
     PrismaModule.forRoot({
       prismaServiceOptions: {
         middlewares: [
-          async (params, next) => {
-            // Before query: change params
-            const result = await next(params);
-            console.log('params123---', JSON.stringify(params, null, 2));
-            console.log('result213---', result);
-            // After query: result
-            return result;
-          },
+          // async (params, next) => {
+          //   // Before query: change params
+          //   const result = await next(params);
+          //   console.log('params123---', JSON.stringify(params, null, 2));
+          //   console.log('result213---', result);
+          //   // After query: result
+          //   return result;
+          // },
         ], // see example loggingMiddleware below
       },
     }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [
