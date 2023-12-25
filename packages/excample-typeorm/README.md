@@ -1,73 +1,60 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+### 执行命令
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+```json
+// 项目初始化完以后，加入typeorm依赖
+pnpm add @nestjs/typeorm typeorm mysql2
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+// 序列化和自动校验
+pnpm add class-validator class-transformer
 
-## Description
+// 密码散列
+pnpm add bcrypt
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ pnpm install
+// openapi
+pnpm add @nestjs/swagger
 ```
 
-## Running the app
+### 注意
 
-```bash
-# development
-$ pnpm run start
+1. 想要触发entity内的`@BeforeUpdate`之类的hooks需要用实体调用save方法
 
-# watch mode
-$ pnpm run start:dev
+@BeforeInsert、@AfterInsert、@BeforeUpdate、@AfterUpdate 仅在使用 repository.save 插入/更新实体时触发，@Before/After在 Remove 的时候触发
 
-# production mode
-$ pnpm run start:prod
+```typescript
+// 如更新操作，先用实体找到某个用户
+const user = this.usersRepository.findOne({ where: { id } });
+
+// @Before/After Remove触发
+this.usersRepository.remove(user);
 ```
 
-## Test
+1. 如果要使用`softRemove`，需要设置`column`为`@DeleteDateColumn`
 
-```bash
-# unit tests
-$ pnpm run test
+```typescript
+@Entity()
+export class User {
+  ...
 
-# e2e tests
-$ pnpm run test:e2e
+  // 设置为软删除日期列，这里设置为bigint是为了监听@AfterSoftRemove事件设置为biginit的unix时间戳
+  @DeleteDateColumn({ type: 'bigint', nullable: true })
+  deleted_at?: number;
 
-# test coverage
-$ pnpm run test:cov
+  // TODO: 监听`@AfterSoftRemove`需要设置，记得更新实体，调用save方法，不然这里的更新字段操作不会生效！！！
+  @AfterSoftRemove()
+  @BeforeRemove()
+  public setDeletedAt() {
+    this.deleted_at = dayjs().unix();
+  }
+}
+
+// TODO: 监听软删除事件以后的操作，需要更新实体，调用save方法 不然这里的更新字段操作不会生效！！！
+async remove(id: number) {
+  const user = await this.findOne(id);
+  if (!user) {
+    throw new ApiException('用户不存在');
+  }
+  await this.usersRepository.softRemove(user);
+  await this.usersRepository.save(user);
+  return user;
+}
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
