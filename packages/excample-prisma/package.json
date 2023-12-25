@@ -18,10 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-
     "init": "prisma init --datasource-provider mysql",
     "migrate": "prisma migrate dev --name init",
-    
     "push": "prisma db push",
     "generate": "prisma generate"
   },
@@ -33,8 +31,10 @@
     "@prisma/client": "^5.7.1",
     "dayjs": "^1.11.10",
     "nestjs-prisma": "^0.22.0",
+    "nestjs-zod": "^3.0.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

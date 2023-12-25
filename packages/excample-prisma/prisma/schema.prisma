@@ -8,14 +8,16 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  password  String
-  nickname  String?
-  email     String?  @unique
-  phone     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  password String
+  nickname String?
+  email    String? @unique
+  // createdAt DateTime @default(now())
+  // updatedAt DateTime @updatedAt
+
+  createdAt DateTime @default(dbgenerated("now()")) @db.Timestamp(0)
+  updatedAt DateTime @default(dbgenerated("NOW() ON UPDATE NOW()")) @db.Timestamp(0)
 
   @@map("user")
 }

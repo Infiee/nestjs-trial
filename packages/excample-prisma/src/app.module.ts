@@ -5,13 +5,16 @@ import {
   PrismaModule,
   providePrismaClientExceptionFilter,
 } from 'nestjs-prisma';
-import { APP_FILTER } from '@nestjs/core';
-import { AllExceptionFilter } from './filters/all-exception.filter';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
+import { AllExceptionsFilter } from './filters/all-exception.filter';
 import { UsersModule } from './users/users.module';
+// nest-zod
+import { ZodValidationPipe } from 'nestjs-zod';
 
 @Module({
   imports: [
     PrismaModule.forRoot({
+      isGlobal: true,
       prismaServiceOptions: {
         middlewares: [
           // async (params, next) => {
@@ -32,7 +35,11 @@ import { UsersModule } from './users/users.module';
     AppService,
     {
       provide: APP_FILTER,
-      useClass: AllExceptionFilter,
+      useClass: AllExceptionsFilter,
+    },
+    {
+      provide: APP_PIPE,
+      useClass: ZodValidationPipe,
     },
     providePrismaClientExceptionFilter({
       // Prisma Error Code: HTTP Status Response
