@@ -16,7 +16,7 @@ SET NEW.test_update = UNIX_TIMESTAMP();
 
 <https://stackoverflow.com/questions/71185664/why-does-zod-make-all-my-schema-fields-optional>
 
-```json
+```typescript
 // tsconfig文件strictNullChecks默认为false，但是如果开启strict，则默认为true
 "strictNullChecks": true,
 "strict": true

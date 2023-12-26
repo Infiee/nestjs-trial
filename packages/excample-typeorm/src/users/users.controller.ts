@@ -40,13 +40,27 @@ export class UsersController {
     return this.usersService.remove(+id);
   }
 
-  @Post('/softRemove/:id')
+  // 软删除
+  @Patch(':id/soft-delete')
   softRemove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
 
-  @Post('/softRecover/:id')
+  // 软恢复
+  @Patch(':id/soft-recover')
   softRecover(@Param('id') id: string) {
     return this.usersService.recover(+id);
+  }
+
+  // 批量插入
+  @Post('/batch')
+  batchInsert(@Body() data: { users: CreateUserDto[] }) {
+    return this.usersService.batchInsert(data.users);
+  }
+
+  // 批量更新
+  @Post('/batchs')
+  batchUpdate(@Body() data: { ids: number[]; userData: CreateUserDto }) {
+    return this.usersService.batchUpdate(data.ids, data.userData);
   }
 }

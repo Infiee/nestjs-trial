@@ -11,6 +11,7 @@ import {
   DeleteDateColumn,
   BeforeSoftRemove,
   AfterSoftRemove,
+  AfterInsert,
 } from 'typeorm';
 import dayjs from 'dayjs';
 
@@ -48,6 +49,7 @@ export class User {
 
   @BeforeInsert()
   public setCreatedAt() {
+    console.log('准备插入数据----------');
     this.created_at = dayjs().unix();
   }
 

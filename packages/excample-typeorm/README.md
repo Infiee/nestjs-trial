@@ -1,6 +1,6 @@
 ### 执行命令
 
-```json
+```typescript
 // 项目初始化完以后，加入typeorm依赖
 pnpm add @nestjs/typeorm typeorm mysql2
 
@@ -58,3 +58,26 @@ async remove(id: number) {
   return user;
 }
 ```
+
+2. query builder的批量插入需要是正确类型化的实例，不然不会触发Entity内的@BeforeInsert,比如下面写法
+
+```typescript
+  // 批量插入
+  async batchInsert(data: { users: CreateUserDto[] }) {
+    const items = [];
+    for (const user of data.users) {
+      // TODO: 关键在这里
+      const item = new User();
+      Object.assign(item, user);
+      items.push(item);
+    }
+    await this.usersRepository
+      .createQueryBuilder()
+      .insert()
+      .into(User)
+      .values(items)
+      .execute();
+    return items;
+  }
+```
+

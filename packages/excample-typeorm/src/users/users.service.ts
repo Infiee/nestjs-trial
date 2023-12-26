@@ -18,7 +18,11 @@ export class UsersService {
   }
 
   async findAll() {
-    const [data, total] = await this.usersRepository.findAndCount();
+    const [data, total] = await this.usersRepository.findAndCount({
+      where: {},
+      skip: 0,
+      take: 10,
+    });
     return { total, data };
   }
 
@@ -39,6 +43,7 @@ export class UsersService {
     return updateUser;
   }
 
+  // 删除
   async remove(id: number) {
     // return this.usersRepository.delete({ id });
     const user = await this.findOne(id);
@@ -48,6 +53,7 @@ export class UsersService {
     return this.usersRepository.remove(user);
   }
 
+  // 软删除
   async softRemove(id: number) {
     const user = await this.findOne(id);
     if (!user) {
@@ -58,9 +64,43 @@ export class UsersService {
     return user;
   }
 
+  // 恢复软删除
   async recover(id: number) {
     await this.usersRepository.restore(id);
-
     return this.findOne(id);
+  }
+
+  // 批量插入
+  async batchInsert(users: CreateUserDto[]) {
+    const items = [];
+    for (const user of users) {
+      const item = new User();
+      Object.assign(item, user);
+      items.push(item);
+    }
+    await this.usersRepository
+      .createQueryBuilder()
+      .insert()
+      .into(User)
+      .values(items)
+      .execute();
+    return items;
+  }
+
+  // 批量更新
+  async batchUpdate(ids: number[], userData: CreateUserDto) {
+    // const items = [];
+    // for (const user of users) {
+    //   const item = new User();
+    //   Object.assign(item, user);
+    //   items.push(item);
+    // }
+    await this.usersRepository
+      .createQueryBuilder()
+      .update(User)
+      .set(userData)
+      .whereInIds(ids)
+      .execute();
+    return 'done';
   }
 }
