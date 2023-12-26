@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { ApiException } from 'src/filters/api-execption';
 
 @Injectable()
@@ -11,6 +11,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private dataSource: DataSource,
   ) {}
   async create(createUserDto: CreateUserDto) {
     const user = await this.usersRepository.create(createUserDto);
@@ -90,15 +91,17 @@ export class UsersService {
   // 批量更新
   // async batchUpdate(ids: number[], userData: CreateUserDto) {
   async batchUpdate(users: User[]) {
-    const items = [];
-    for (const user of users) {
-      const item = new User();
-      Object.assign(item, user);
-      items.push(item);
-    }
-    await this.usersRepository.upsert(items, ['id']);
-    return items;
+    // 方法一：
+    // const items = [];
+    // for (const user of users) {
+    //   const item = new User();
+    //   Object.assign(item, user);
+    //   items.push(item);
+    // }
+    // await this.usersRepository.upsert(items, ['id']);
+    // return items;
 
+    // 方法二：
     // await this.usersRepository
     //   .createQueryBuilder()
     //   .update(User)
@@ -106,5 +109,46 @@ export class UsersService {
     //   .whereInIds(ids)
     //   .execute();
     // return 'done';
+
+    // TODO: 方法三，暂时发现的最优解！：
+    const result = await this.dataSource.transaction(async (manage) => {
+      // TODO: 只能用manage进行处理，不然不会自动回滚
+      // 遍历每个用户更新数据
+      const updatePromises = users.map(async (userData) => {
+        const { id, ...updates } = userData;
+
+        const user = await manage.findOne(User, { where: { id } });
+        const updateUser = await manage.merge(User, user, updates);
+        await manage.save(updateUser);
+        return updateUser;
+      });
+      const updatedData = await Promise.all(updatePromises);
+      return updatedData;
+    });
+    return result;
+
+    // 下面方法不知道为啥不自动回滚，暂时不想了，typeorm还是有些坑
+    // await this.dataSource.transaction(async (transactionalEntityManager) => {
+    //   const queryRunner = this.dataSource.createQueryRunner();
+    //   await queryRunner.connect();
+    //   await queryRunner.startTransaction();
+    //   try {
+    //     // 遍历每个用户更新数据
+    //     const updatePromises = users.map((userData) => {
+    //       const { id, ...updates } = userData;
+    //       return this.update(id, updates);
+    //     });
+    //     await Promise.all(updatePromises);
+
+    //     await queryRunner.commitTransaction();
+    //     console.log('还是执行了---------');
+    //   } catch (e) {
+    //     console.log('监听到错误了-执行回滚---', e);
+    //     await queryRunner.rollbackTransaction();
+    //     throw e;
+    //   } finally {
+    //     await queryRunner.release();
+    //   }
+    // });
   }
 }

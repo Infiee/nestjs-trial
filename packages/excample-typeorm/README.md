@@ -80,3 +80,5 @@ async remove(id: number) {
     return items;
   }
 ```
+
+3. 批量更新最好的方法就是：使用事务！！！
