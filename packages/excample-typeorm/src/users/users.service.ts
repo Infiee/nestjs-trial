@@ -88,19 +88,23 @@ export class UsersService {
   }
 
   // 批量更新
-  async batchUpdate(ids: number[], userData: CreateUserDto) {
-    // const items = [];
-    // for (const user of users) {
-    //   const item = new User();
-    //   Object.assign(item, user);
-    //   items.push(item);
-    // }
-    await this.usersRepository
-      .createQueryBuilder()
-      .update(User)
-      .set(userData)
-      .whereInIds(ids)
-      .execute();
-    return 'done';
+  // async batchUpdate(ids: number[], userData: CreateUserDto) {
+  async batchUpdate(users: User[]) {
+    const items = [];
+    for (const user of users) {
+      const item = new User();
+      Object.assign(item, user);
+      items.push(item);
+    }
+    await this.usersRepository.upsert(items, ['id']);
+    return items;
+
+    // await this.usersRepository
+    //   .createQueryBuilder()
+    //   .update(User)
+    //   .set(userData)
+    //   .whereInIds(ids)
+    //   .execute();
+    // return 'done';
   }
 }

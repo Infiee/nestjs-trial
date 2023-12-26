@@ -10,6 +10,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 
 @Controller('users')
 export class UsersController {
@@ -59,8 +60,12 @@ export class UsersController {
   }
 
   // 批量更新
+  // @Post('/batchs')
+  // batchUpdate(@Body() data: { ids: number[]; userData: CreateUserDto }) {
+  //   return this.usersService.batchUpdate(data.ids, data.userData);
+  // }
   @Post('/batchs')
-  batchUpdate(@Body() data: { ids: number[]; userData: CreateUserDto }) {
-    return this.usersService.batchUpdate(data.ids, data.userData);
+  batchUpdate(@Body() data: { users: User[] }) {
+    return this.usersService.batchUpdate(data.users);
   }
 }

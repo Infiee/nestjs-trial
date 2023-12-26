@@ -28,7 +28,7 @@ const user = this.usersRepository.findOne({ where: { id } });
 this.usersRepository.remove(user);
 ```
 
-1. 如果要使用`softRemove`，需要设置`column`为`@DeleteDateColumn`
+2. 如果要使用`softRemove`，需要设置`column`为`@DeleteDateColumn`
 
 ```typescript
 @Entity()
@@ -80,4 +80,3 @@ async remove(id: number) {
     return items;
   }
 ```
-

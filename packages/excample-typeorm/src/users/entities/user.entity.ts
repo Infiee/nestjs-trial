@@ -45,12 +45,13 @@ export class User {
   @BeforeUpdate()
   public setUpdatedAt() {
     this.updated_at = dayjs().unix();
+    console.log('准备更新数据----------', this);
   }
 
   @BeforeInsert()
   public setCreatedAt() {
-    console.log('准备插入数据----------');
     this.created_at = dayjs().unix();
+    console.log('准备插入数据----------', this);
   }
 
   @AfterSoftRemove()
