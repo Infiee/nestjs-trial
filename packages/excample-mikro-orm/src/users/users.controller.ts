@@ -25,8 +25,8 @@ export class UsersController {
 
   // 批量更新
   @Patch('/batch')
-  batchUpdate(@Body() batchUpdateUserDto: User[]) {
-    return this.usersService.batchUpdate(batchUpdateUserDto);
+  batchUpdate(@Body() body: { users: User[] }) {
+    return this.usersService.batchUpdate(body.users);
   }
 
   // 批量插入

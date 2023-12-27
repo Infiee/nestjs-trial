@@ -27,23 +27,23 @@ export class User {
     // onCreate: () => dayjs().unix() + '',
     type: BigIntType,
   })
-  create_time: string;
+  created_at: string;
 
   @Property({
     // onUpdate: () => dayjs().unix() + '',
     nullable: true,
     type: BigIntType,
   })
-  update_time: string;
+  updated_at: string;
 
   @BeforeCreate()
   @BeforeUpdate()
   public setUpdatedAt() {
-    this.update_time = dayjs().unix() + '';
+    this.updated_at = dayjs().unix() + '';
   }
 
   @BeforeCreate()
   public setCreatedAt() {
-    this.create_time = dayjs().unix() + '';
+    this.created_at = dayjs().unix() + '';
   }
 }

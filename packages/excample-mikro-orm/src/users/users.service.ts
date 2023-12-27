@@ -49,9 +49,13 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    const user = await this.userRepository.findOneOrFail(id);
-    await this.userRepository.getEntityManager().remove(user).flush();
-    return user;
+    // 方法一：会调用事务
+    // const user = await this.userRepository.findOneOrFail(id);
+    // await this.userRepository.getEntityManager().remove(user).flush();
+    // return user;
+
+    // 方法二：执行原生sql，如：delete from `user` where `id` in (2)
+    return await this.userRepository.nativeDelete({ id });
   }
 
   async batchCreate(dto: User[]) {
@@ -67,21 +71,11 @@ export class UsersService {
   }
 
   async batchUpdate(dto: User[]) {
-    // const users = await this.userRepository.upsertMany([
-    //   {
-    //     id: 4,
-    //     username: 'x1_alias',
-    //     password: '123456',
-    //     email: '123@qq.com',
-    //   },
-    //   {
-    //     id: 5,
-    //     username: 'x2',
-    //     password: '123456',
-    //     email: '123@qq.com',
-    //   },
-    // ]);
+    // 方法一：如果数据几乎总是存在，可能会增加一些性能开销，因为每次插入都需要检查唯一键冲突
+    // const users = await this.userRepository.upsertMany(dto);
     // return users;
+
+    // 方法二: 查找到数据以后直接更新
     const ids = dto.map((item) => item.id);
     const users = await this.userRepository.find({
       id: { $in: ids },
