@@ -5,7 +5,9 @@ import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
 } from 'nest-winston';
+
 import 'winston-daily-rotate-file';
+import DailyRotateFile from 'winston-daily-rotate-file';
 
 // const myFormat = winston.format.printf(
 //   ({ level, message, label, timestamp, ...info }) => {
@@ -13,7 +15,9 @@ import 'winston-daily-rotate-file';
 //   },
 // );
 
-const defaultLoggerOptions = {
+const defaultLoggerOptions: DailyRotateFile.DailyRotateFileTransportOptions = {
+  filename: 'error-%DATE%.log',
+  level: 'error',
   json: true, // query查询日志必须设置
   dirname: `logs`, // 日志保存的目录
   datePattern: 'YYYY_MM_DD', // 日志轮换的频率，此处表示每天。
@@ -25,45 +29,45 @@ const defaultLoggerOptions = {
     winston.format.timestamp({
       format: 'YYYY-MM-DD HH:mm:ss.ms',
     }),
-    winston.format.label({ label: '日志' }),
+    // winston.format.label({ label: '日志' }),
     winston.format.json(),
     // myFormat,
   ),
 };
 
+const logTransport = (
+  options: DailyRotateFile.DailyRotateFileTransportOptions,
+): DailyRotateFile => {
+  return new winston.transports.DailyRotateFile(
+    Object.assign({}, defaultLoggerOptions, options),
+  );
+};
+
 const LogModule = WinstonModule.forRoot({
-  //   level: 'silly',
-  //   defaultMeta: { service: 'user-service' },
+  level: 'silly',
+  // defaultMeta: { service: 'user-service' },
   //   format: winston.format.json(),
   transports: [
     // new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
     // new winston.transports.File({ filename: 'logs/combined.log' }),
-    //
+
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.timestamp(),
         winston.format.ms(),
-        nestWinstonModuleUtilities.format.nestLike('MicroLogger', {
+        nestWinstonModuleUtilities.format.nestLike('日志信息', {
           colors: true,
           prettyPrint: true,
         }),
       ),
     }),
-    //
-    // new winston.transports.DailyRotateFile({
-    //   filename: 'logs/%DATE%/debug.log',
-    //   level: 'debug',
-    //   ...defaultLoggerOptions,
-    // }),
-    new winston.transports.DailyRotateFile({
+    logTransport({
       filename: 'error-%DATE%.log',
       level: 'error',
-      ...defaultLoggerOptions,
     }),
-    new winston.transports.DailyRotateFile({
+    logTransport({
       filename: 'verbose-%DATE%.log',
       level: 'verbose',
-      ...defaultLoggerOptions,
     }),
   ],
 });

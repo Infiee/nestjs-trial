@@ -11,7 +11,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction) {
     // console.log('request');
-    this.logger.info('【测试MSG中间件】', {
+    this.logger.info('【请求开始】', {
       url: req.originalUrl,
       body: req.body,
       headers: req.headers,

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
@@ -12,7 +12,7 @@ export class AppController {
   ) {}
 
   @Get()
-  getHello(): string {
+  getHello(@Req() req): string {
     // this.logger.info('【测试MSG】', {
     //   message: '这是测试信息的msg',
     //   service: AppController.name,
@@ -24,11 +24,13 @@ export class AppController {
     try {
       throw new Error();
     } catch (e) {
-      this.logger.error(
-        'Calling getHello() Error',
-        e.stack,
-        AppController.name,
-      );
+      // this.logger.error('调用 getHello() 错误', e.stack, AppController.name);
+      this.logger.error('调用 getHello() 错误', {
+        url: req.originalUrl,
+        body: req.body,
+        headers: req.headers,
+        context: AppController.name,
+      });
     }
 
     return this.appService.getHello();
