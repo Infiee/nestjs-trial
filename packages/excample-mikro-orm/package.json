@@ -34,7 +34,9 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^7.1.17",
     "dayjs": "^1.11.10",
+    "portfinder": "^1.0.32",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },

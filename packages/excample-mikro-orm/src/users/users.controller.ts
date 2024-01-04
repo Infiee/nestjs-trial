@@ -10,8 +10,10 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { UserEntity } from './entities/user.entity';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('用户')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -19,13 +21,13 @@ export class UsersController {
   // TODO: 放在前面是为了防止和后面的路由规则产生冲突
   // 批量插入
   @Post('/batch')
-  batchCreate(@Body() body: { users: User[] }) {
+  batchCreate(@Body() body: { users: UserEntity[] }) {
     return this.usersService.batchCreate(body.users);
   }
 
   // 批量更新
   @Patch('/batch')
-  batchUpdate(@Body() body: { users: User[] }) {
+  batchUpdate(@Body() body: { users: UserEntity[] }) {
     return this.usersService.batchUpdate(body.users);
   }
 
@@ -36,6 +38,8 @@ export class UsersController {
   }
 
   // TODO: 放在后面是为了防止和前面的批量路由规则产生冲突
+  @ApiOperation({ summary: '创建用户' })
+  @ApiResponse({ type: UserEntity })
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);

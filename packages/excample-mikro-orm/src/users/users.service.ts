@@ -3,13 +3,13 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { EntityRepository, wrap } from '@mikro-orm/core';
-import { User } from './entities/user.entity';
+import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: EntityRepository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: EntityRepository<UserEntity>,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -44,7 +44,7 @@ export class UsersService {
     // const user = await this.userRepository.findOneOrFail(id);
     // return await this.userRepository.upsert(
     //   user,
-    //   updateUserDto as NativeInsertUpdateOptions<User>,
+    //   updateUserDto as NativeInsertUpdateOptions<UserEntity>,
     // );
   }
 
@@ -58,10 +58,10 @@ export class UsersService {
     return await this.userRepository.nativeDelete({ id });
   }
 
-  async batchCreate(dto: User[]) {
+  async batchCreate(dto: UserEntity[]) {
     const data = [];
     for (const user of dto) {
-      const newUser = new User();
+      const newUser = new UserEntity();
       Object.assign(newUser, user);
       this.userRepository.getEntityManager().persist(newUser);
       data.push(newUser);
@@ -70,7 +70,7 @@ export class UsersService {
     return data;
   }
 
-  async batchUpdate(dto: User[]) {
+  async batchUpdate(dto: UserEntity[]) {
     // 方法一：如果数据几乎总是存在，可能会增加一些性能开销，因为每次插入都需要检查唯一键冲突
     // const users = await this.userRepository.upsertMany(dto);
     // return users;
