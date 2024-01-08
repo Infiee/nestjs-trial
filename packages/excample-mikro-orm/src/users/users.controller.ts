@@ -6,12 +6,23 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiPropertyOptional,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+
+export class CursorQueryDto {
+  @ApiPropertyOptional()
+  cursorId?: string;
+}
 
 @ApiTags('用户')
 @Controller('users')
@@ -48,6 +59,13 @@ export class UsersController {
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @Get('/cursor')
+  findAllCursor(@Query() query: CursorQueryDto) {
+    return this.usersService.findAllCursor(
+      query.cursorId ? +query.cursorId : 0,
+    );
   }
 
   @Get(':id')

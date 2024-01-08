@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   IsEmail,
   IsEnum,
@@ -12,6 +13,7 @@ export class CreateUserDto {
   @IsNotEmpty({ message: '请输入用户名' })
   username: string;
 
+  @Exclude()
   @IsNotEmpty({ message: '请输入密码' })
   @Matches(passwordRegexp, {
     message: '请输入包含大、小写字母、数字、特殊字符且不少于8个字符组合的密码',

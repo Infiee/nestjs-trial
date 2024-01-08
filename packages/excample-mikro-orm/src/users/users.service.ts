@@ -29,6 +29,20 @@ export class UsersService {
     };
   }
 
+  async findAllCursor(cursorId: number) {
+    const currentCursor = await this.userRepository.findByCursor(
+      {
+        created_at: { $eq: '1704705262' },
+      },
+      {
+        first: 10,
+        after: { id: cursorId },
+        orderBy: { id: 'asc' },
+      },
+    );
+    return currentCursor;
+  }
+
   findOne(id: number) {
     return this.userRepository.findOneOrFail(id);
   }
