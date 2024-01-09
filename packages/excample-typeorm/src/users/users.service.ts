@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,6 +14,18 @@ export class UsersService {
     private dataSource: DataSource,
   ) {}
   async create(createUserDto: CreateUserDto) {
+    // const userName = await this.usersRepository.findOne({
+    //   where: { username: createUserDto.username },
+    // });
+    // if (userName) {
+    //   throw new HttpException('用户名已存在', 401);
+    // }
+    // const userEmail = await this.usersRepository.findOne({
+    //   where: { email: createUserDto.email },
+    // });
+    // if (userEmail) {
+    //   throw new HttpException('用户Email已存在', 401);
+    // }
     const user = await this.usersRepository.create(createUserDto);
     return this.usersRepository.save(user);
   }

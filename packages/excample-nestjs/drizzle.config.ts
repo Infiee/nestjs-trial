@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
-console.log('dd----', process.env.DATABASE_PG_URL);
+// console.log('dd----', process.env.DATABASE_PG_URL);
 
 export default {
   schema: './drizzle/schema.ts',

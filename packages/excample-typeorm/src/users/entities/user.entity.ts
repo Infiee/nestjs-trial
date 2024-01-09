@@ -16,6 +16,7 @@ import {
 import dayjs from 'dayjs';
 import { Exclude } from 'class-transformer';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import bcrypt from 'bcrypt';
 
 @Entity()
 export class User {
@@ -60,8 +61,12 @@ export class User {
   }
 
   @BeforeInsert()
-  public setCreatedAt() {
+  public async setCreatedAt() {
     this.created_at = dayjs().unix();
+
+    // 密码加密
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
     console.log('准备插入数据----------', this);
   }
 

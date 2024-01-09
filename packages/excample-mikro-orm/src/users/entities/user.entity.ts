@@ -28,6 +28,9 @@ export class UserEntity {
   @Property({ nullable: true })
   email: string;
 
+  /**
+   * @description 创建时间
+   */
   @ApiProperty()
   @Property({
     // onCreate: () => dayjs().unix() + '',
