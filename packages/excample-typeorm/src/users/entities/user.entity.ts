@@ -14,30 +14,41 @@ import {
   AfterInsert,
 } from 'typeorm';
 import dayjs from 'dayjs';
+import { Exclude } from 'class-transformer';
+import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class User {
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty()
   @Column()
   username: string;
 
+  @ApiHideProperty()
+  @Exclude()
   @Column({ select: false })
   password: string;
 
+  @ApiProperty()
   @Column({ unique: true })
   email: string;
 
+  @ApiProperty()
   @Column({ nullable: true })
   phone?: string;
 
+  @ApiProperty()
   @Column({ type: 'bigint', nullable: false })
   created_at: number;
 
+  @ApiProperty()
   @Column({ type: 'bigint', nullable: true })
   updated_at?: number;
 
+  @ApiProperty()
   // @Column({ type: 'bigint', nullable: true })
   @DeleteDateColumn({ type: 'bigint', nullable: true })
   deleted_at?: number;

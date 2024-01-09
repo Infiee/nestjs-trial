@@ -12,5 +12,9 @@
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=8.0.0"
+  },
+  "dependencies": {
+    "@nestjs/swagger": "^7.1.17",
+    "portfinder": "^1.0.32"
   }
 }

@@ -1,8 +1,9 @@
 import { NestFactory } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { getPortPromise } from 'portfinder';
+
 import { AppModule } from './app.module';
 
-import { getPortPromise } from 'portfinder';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 const setupSwagger = (app) => {
   const config = new DocumentBuilder()
     .addBearerAuth()
@@ -21,11 +22,14 @@ const setupSwagger = (app) => {
 
 async function bootstrap() {
   const port = await getPortPromise({ port: 3000 });
+
   const app = await NestFactory.create(AppModule);
 
   setupSwagger(app);
 
   await app.listen(port);
+
   console.log(`服务运行在: http://localhost:${port}`);
 }
+
 bootstrap();

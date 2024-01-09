@@ -13,3 +13,10 @@ nestjs的pnpm monorepo仓库，里面有一些框架或库的试用
 
 - [excample-winston-logger](https://github.com/Infiee/nestjs-trial/tree/main/packages/excample-winston-logger)
 - [excample-pino-logger](https://github.com/Infiee/nestjs-trial/tree/main/packages/excample-pino-logger)
+
+### 命令
+
+```shell
+# 给所有仓库安装portfinder、@nestjs/swagger
+pnpm add portfinder @nestjs/swagger -w
+```

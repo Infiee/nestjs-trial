@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 
-@Entity()
+@Entity({ tableName: 'user' })
 export class UserEntity {
   @ApiProperty()
   @PrimaryKey()
