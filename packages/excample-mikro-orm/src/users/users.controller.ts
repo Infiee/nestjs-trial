@@ -42,7 +42,7 @@ export class UsersController {
     return this.usersService.batchUpdate(body.users);
   }
 
-  // 批量插入
+  // 批量删除
   @Delete('/batch')
   batchRemove(@Body() body: { ids: number[] }) {
     return this.usersService.batchRemove(body.ids);

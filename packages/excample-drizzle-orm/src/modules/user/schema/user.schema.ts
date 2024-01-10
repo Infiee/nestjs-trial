@@ -13,7 +13,7 @@ export const userSchema = z.object({
   email: z.string().email({ message: '请输入正确的邮箱地址' }),
 });
 
-// export type User = z.infer<typeof userSchema>;
+export type User = z.infer<typeof userSchema>;
 
 export const userResponseSchema = userSchema.omit({
   password: true,
@@ -21,13 +21,18 @@ export const userResponseSchema = userSchema.omit({
 
 export class UserEntity extends createZodDto(userResponseSchema) {
   @ApiProperty()
-  id: number;
+  id!: number;
 
   @ApiProperty()
-  created_at: Date;
+  createAt!: Date;
 
   @ApiProperty()
-  update_at: Date;
+  updateAt!: Date;
+
+  // constructor() {
+  //   super();
+  //   this.update_at = new Date();
+  // }
 }
 
 export class CreateUserDto extends createZodDto(userSchema) {}

@@ -1,15 +1,21 @@
 import type { Config } from 'drizzle-kit';
+import dotenv from 'dotenv';
+
+if (process.env.NODE_ENV === 'development') {
+  console.log('env---', process.env.NODE_ENV);
+  dotenv.config({
+    path: '.env.development',
+  });
+}
+
+// console.log('dd----', process.env.DATABASE_PG_URL);
 
 export default {
-  schema: './drizzle/schema/*.ts',
+  schema: './drizzle/schema.ts',
   out: './drizzle/migration',
-  driver: 'mysql2',
+  driver: 'pg',
   dbCredentials: {
-    user: 'root',
-    password: 'root',
-    host: '127.0.0.1',
-    port: 3306,
-    database: 'test_drizzle_db',
+    connectionString: process.env.DATABASE_PG_URL,
   },
   verbose: true,
 } satisfies Config;

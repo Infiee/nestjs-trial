@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { UserModule } from '../user/user.module';
 import { ConfigModule } from '@nestjs/config';
 
-import * as schema from '../../../drizzle/schema';
+import * as schema from '@drizzle/schema';
 import { DrizzlePGModule } from '@knaadh/nestjs-drizzle-pg';
+import { APP_FILTER } from '@nestjs/core';
+import { AllExceptionsFilter } from 'src/filters/all-exception.filter';
 
 @Module({
   imports: [
@@ -20,13 +22,18 @@ import { DrizzlePGModule } from '@knaadh/nestjs-drizzle-pg';
               connectionString: process.env.DATABASE_PG_URL,
             },
           },
-          config: { schema: { ...schema } },
+          config: { schema: { ...schema }, logger: true },
         };
       },
     }),
     UserModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+  ],
 })
 export class AppModule {}

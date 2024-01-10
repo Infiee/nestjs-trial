@@ -1,8 +1,21 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import { getPortPromise } from 'portfinder';
+import { AppModule, initialize } from './modules/app';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  const port = await getPortPromise({ port: 3000 });
+
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter({ logger: false }),
+  );
+
+  await initialize(app);
+
+  await app.listen(port);
+
+  console.log(`应用启动: http://localhost:${port}`);
 }
+
 bootstrap();

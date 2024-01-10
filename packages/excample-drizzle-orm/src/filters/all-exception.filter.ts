@@ -1,11 +1,4 @@
-import {
-  ExceptionFilter,
-  Catch,
-  ArgumentsHost,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
-import { ZodValidationException } from 'nestjs-zod';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { ZodError } from 'zod';
 
 // import { BaseExceptionFilter } from '@nestjs/core';
@@ -17,8 +10,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
       this.catchHttpException(exception, host);
     } else if (exception instanceof ZodError) {
       this.catchZodException(exception, host);
-    } else if (exception instanceof ZodValidationException) {
-      this.catchZodValidationException(exception, host);
     } else {
       this.catchException(exception, host);
     }
@@ -32,16 +23,11 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response.status(HttpStatus.BAD_REQUEST).json({
       code: -1,
       message: '捕获异常',
-      error: exception
+      error: exception,
     });
   }
 
   catchHttpException(exception: HttpException, host: ArgumentsHost) {
-    if (exception instanceof ZodValidationException) {
-      this.catchZodValidationException(exception, host);
-      return;
-    }
-
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     // const request = ctx.getRequest();
@@ -63,21 +49,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
       code: -1,
       // message: exception.errors[0].message,
       message: exception.flatten().fieldErrors,
-    });
-  }
-
-  catchZodValidationException(
-    exception: ZodValidationException,
-    host: ArgumentsHost,
-  ) {
-    console.log('命中了catchZodValidationException', exception.getZodError());
-    const ctx = host.switchToHttp();
-    const response = ctx.getResponse();
-
-    response.status(HttpStatus.BAD_REQUEST).json({
-      code: -1,
-      message: '请求失败',
-      error: exception.getZodError().flatten().fieldErrors
     });
   }
 }
