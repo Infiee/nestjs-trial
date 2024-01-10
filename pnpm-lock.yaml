@@ -17,30 +17,54 @@ importers:
 
   packages/excample-drizzle-orm:
     dependencies:
-      '@knaadh/nestjs-drizzle-mysql2':
-        specifier: ^1.0.1
-        version: 1.0.1(@nestjs/common@10.3.0)(drizzle-orm@0.29.1)(mysql2@3.6.5)
+      '@anatine/zod-nestjs':
+        specifier: ^2.0.3
+        version: 2.0.3(@anatine/zod-openapi@2.2.2)(@nestjs/common@10.3.0)(@nestjs/swagger@7.1.17)(openapi3-ts@4.2.1)(zod@3.22.4)
+      '@anatine/zod-openapi':
+        specifier: ^2.2.2
+        version: 2.2.2(openapi3-ts@4.2.1)(zod@3.22.4)
+      '@fastify/helmet':
+        specifier: ^11.1.1
+        version: 11.1.1
+      '@fastify/static':
+        specifier: ^6.12.0
+        version: 6.12.0
+      '@knaadh/nestjs-drizzle-pg':
+        specifier: ^1.0.0
+        version: 1.0.0(@nestjs/common@10.3.0)(drizzle-orm@0.29.1)(pg@8.11.3)
       '@nestjs/common':
         specifier: ^10.0.0
         version: 10.3.0(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.14)(rxjs@7.8.1)
+      '@nestjs/config':
+        specifier: ^3.1.1
+        version: 3.1.1(@nestjs/common@10.3.0)(reflect-metadata@0.1.14)
       '@nestjs/core':
         specifier: ^10.0.0
         version: 10.3.0(@nestjs/common@10.3.0)(@nestjs/platform-express@10.3.0)(reflect-metadata@0.1.14)(rxjs@7.8.1)
+      '@nestjs/mapped-types':
+        specifier: '*'
+        version: 2.0.4(@nestjs/common@10.3.0)(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.14)
       '@nestjs/platform-express':
         specifier: ^10.0.0
         version: 10.3.0(@nestjs/common@10.3.0)(@nestjs/core@10.3.0)
+      '@nestjs/platform-fastify':
+        specifier: ^10.3.0
+        version: 10.3.0(@fastify/static@6.12.0)(@nestjs/common@10.3.0)(@nestjs/core@10.3.0)
       '@nestjs/swagger':
         specifier: ^7.1.17
         version: 7.1.17(@fastify/static@6.12.0)(@nestjs/common@10.3.0)(@nestjs/core@10.3.0)(reflect-metadata@0.1.14)
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.3.1
       drizzle-orm:
         specifier: ^0.29.1
-        version: 0.29.1(mysql2@3.6.5)
-      mysql2:
-        specifier: ^3.6.5
-        version: 3.6.5
-      nestjs-zod:
-        specifier: ^3.0.0
-        version: 3.0.0(@nestjs/common@10.3.0)(@nestjs/core@10.3.0)(@nestjs/swagger@7.1.17)(zod@3.22.4)
+        version: 0.29.1(@types/pg@8.10.9)(pg@8.11.3)
+      pg:
+        specifier: ^8.11.3
+        version: 8.11.3
+      portfinder:
+        specifier: ^1.0.32
+        version: 1.0.32
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.14
@@ -69,6 +93,9 @@ importers:
       '@types/node':
         specifier: ^20.3.1
         version: 20.10.5
+      '@types/pg':
+        specifier: ^8.10.9
+        version: 8.10.9
       '@types/supertest':
         specifier: ^2.0.12
         version: 2.0.16
@@ -225,7 +252,7 @@ importers:
         version: 6.3.3
       ts-jest:
         specifier: ^29.1.1
-        version: 29.1.1(@babel/core@7.23.6)(jest@29.7.0)(typescript@5.3.3)
+        version: 29.1.1(@babel/core@7.23.6)(esbuild@0.19.10)(jest@29.7.0)(typescript@5.3.3)
       ts-loader:
         specifier: ^9.5.1
         version: 9.5.1(typescript@5.3.3)(webpack@5.89.0)
@@ -329,21 +356,15 @@ importers:
 
   packages/excample-nestjs:
     dependencies:
-      '@anatine/zod-nestjs':
-        specifier: ^2.0.3
-        version: 2.0.3(@anatine/zod-openapi@2.2.2)(@nestjs/common@10.3.0)(@nestjs/swagger@7.1.17)(openapi3-ts@4.2.1)(zod@3.22.4)
-      '@anatine/zod-openapi':
-        specifier: ^2.2.2
-        version: 2.2.2(openapi3-ts@4.2.1)(zod@3.22.4)
-      '@fastify/helmet':
-        specifier: ^11.1.1
-        version: 11.1.1
-      '@fastify/static':
-        specifier: ^6.12.0
-        version: 6.12.0
-      '@knaadh/nestjs-drizzle-pg':
-        specifier: ^1.0.0
-        version: 1.0.0(@nestjs/common@10.3.0)(drizzle-orm@0.29.1)(pg@8.11.3)
+      '@mikro-orm/core':
+        specifier: ^6.0.1
+        version: 6.0.1
+      '@mikro-orm/mysql':
+        specifier: ^6.0.1
+        version: 6.0.1(@mikro-orm/core@6.0.1)
+      '@mikro-orm/nestjs':
+        specifier: ^5.2.3
+        version: 5.2.3(@mikro-orm/core@6.0.1)(@nestjs/common@10.3.0)(@nestjs/core@10.3.0)
       '@nestjs/common':
         specifier: ^10.0.0
         version: 10.3.0(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.14)(rxjs@7.8.1)
@@ -353,43 +374,28 @@ importers:
       '@nestjs/core':
         specifier: ^10.0.0
         version: 10.3.0(@nestjs/common@10.3.0)(@nestjs/platform-express@10.3.0)(reflect-metadata@0.1.14)(rxjs@7.8.1)
-      '@nestjs/mapped-types':
-        specifier: '*'
-        version: 2.0.4(@nestjs/common@10.3.0)(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.14)
       '@nestjs/platform-express':
         specifier: ^10.0.0
         version: 10.3.0(@nestjs/common@10.3.0)(@nestjs/core@10.3.0)
-      '@nestjs/platform-fastify':
-        specifier: ^10.3.0
-        version: 10.3.0(@fastify/static@6.12.0)(@nestjs/common@10.3.0)(@nestjs/core@10.3.0)
       '@nestjs/swagger':
         specifier: ^7.1.17
         version: 7.1.17(@fastify/static@6.12.0)(@nestjs/common@10.3.0)(@nestjs/core@10.3.0)(reflect-metadata@0.1.14)
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
-      drizzle-orm:
-        specifier: ^0.29.1
-        version: 0.29.1(@types/pg@8.10.9)(pg@8.11.3)
-      pg:
-        specifier: ^8.11.3
-        version: 8.11.3
-      portfinder:
-        specifier: ^1.0.32
-        version: 1.0.32
+      helmet:
+        specifier: ^7.1.0
+        version: 7.1.0
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.14
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
-      zod:
-        specifier: ^3.22.4
-        version: 3.22.4
     devDependencies:
       '@nestjs/cli':
         specifier: ^10.0.0
-        version: 10.2.1(esbuild@0.19.10)
+        version: 10.2.1
       '@nestjs/schematics':
         specifier: ^10.0.0
         version: 10.0.3(typescript@5.3.3)
@@ -405,9 +411,6 @@ importers:
       '@types/node':
         specifier: ^20.3.1
         version: 20.10.5
-      '@types/pg':
-        specifier: ^8.10.9
-        version: 8.10.9
       '@types/supertest':
         specifier: ^2.0.12
         version: 2.0.16
@@ -417,9 +420,6 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.0.0
         version: 6.15.0(eslint@8.56.0)(typescript@5.3.3)
-      drizzle-kit:
-        specifier: ^0.20.7
-        version: 0.20.7
       eslint:
         specifier: ^8.42.0
         version: 8.56.0
@@ -540,7 +540,7 @@ importers:
         version: 6.3.3
       ts-jest:
         specifier: ^29.1.0
-        version: 29.1.1(@babel/core@7.23.6)(jest@29.7.0)(typescript@5.3.3)
+        version: 29.1.1(@babel/core@7.23.6)(esbuild@0.19.10)(jest@29.7.0)(typescript@5.3.3)
       ts-loader:
         specifier: ^9.4.3
         version: 9.5.1(typescript@5.3.3)(webpack@5.89.0)
@@ -734,7 +734,7 @@ importers:
         version: 6.3.3
       ts-jest:
         specifier: ^29.1.0
-        version: 29.1.1(@babel/core@7.23.6)(jest@29.7.0)(typescript@5.3.3)
+        version: 29.1.1(@babel/core@7.23.6)(esbuild@0.19.10)(jest@29.7.0)(typescript@5.3.3)
       ts-loader:
         specifier: ^9.4.3
         version: 9.5.1(typescript@5.3.3)(webpack@5.89.0)
@@ -846,7 +846,7 @@ importers:
         version: 6.3.3
       ts-jest:
         specifier: ^29.1.0
-        version: 29.1.1(@babel/core@7.23.6)(jest@29.7.0)(typescript@5.3.3)
+        version: 29.1.1(@babel/core@7.23.6)(esbuild@0.19.10)(jest@29.7.0)(typescript@5.3.3)
       ts-loader:
         specifier: ^9.4.3
         version: 9.5.1(typescript@5.3.3)(webpack@5.89.0)
@@ -937,7 +937,7 @@ importers:
         version: 6.3.3
       ts-jest:
         specifier: ^29.1.0
-        version: 29.1.1(@babel/core@7.23.6)(jest@29.7.0)(typescript@5.3.3)
+        version: 29.1.1(@babel/core@7.23.6)(esbuild@0.19.10)(jest@29.7.0)(typescript@5.3.3)
       ts-loader:
         specifier: ^9.4.3
         version: 9.5.1(typescript@5.3.3)(webpack@5.89.0)
@@ -2601,19 +2601,6 @@ packages:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  /@knaadh/nestjs-drizzle-mysql2@1.0.1(@nestjs/common@10.3.0)(drizzle-orm@0.29.1)(mysql2@3.6.5):
-    resolution: {integrity: sha512-8Bhstsi4qRA8mgR3AS2pBVD0rMNabVLusOdrFef6yT5UJHx8zTjcD5XFmkQv2VETsSJc0Jh7e3PkL1cPpQ+grw==}
-    peerDependencies:
-      '@nestjs/common': '>=9.0.0'
-      drizzle-orm: '>=0.28.6'
-      mysql2: '>=2'
-    dependencies:
-      '@nestjs/common': 10.3.0(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.14)(rxjs@7.8.1)
-      drizzle-orm: 0.29.1(mysql2@3.6.5)
-      mysql2: 3.6.5
-      tslib: 2.6.2
-    dev: false
-
   /@knaadh/nestjs-drizzle-pg@1.0.0(@nestjs/common@10.3.0)(drizzle-orm@0.29.1)(pg@8.11.3):
     resolution: {integrity: sha512-21Ywzn/5y0QQz3cx1Nc2ZKfzW7LAjWCjATymkT148YECc+BIwpwvWvpejnjPOjFcyM0XfNT2axvRb0913GVfWg==}
     peerDependencies:
@@ -2786,8 +2773,8 @@ packages:
       '@nestjs/core': ^8.0.0 || ^9.0.0 || ^10.0.0
     dependencies:
       '@mikro-orm/core': 6.0.1
-      '@nestjs/common': 10.3.0(reflect-metadata@0.1.13)(rxjs@7.8.1)
-      '@nestjs/core': 10.3.0(@nestjs/common@10.3.0)(@nestjs/platform-express@10.3.0)(reflect-metadata@0.1.13)(rxjs@7.8.1)
+      '@nestjs/common': 10.3.0(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.14)(rxjs@7.8.1)
+      '@nestjs/core': 10.3.0(@nestjs/common@10.3.0)(@nestjs/platform-express@10.3.0)(reflect-metadata@0.1.14)(rxjs@7.8.1)
     dev: false
 
   /@mikro-orm/reflection@6.0.1(@mikro-orm/core@6.0.1):
@@ -5460,71 +5447,6 @@ packages:
       pg: 8.11.3
     dev: false
 
-  /drizzle-orm@0.29.1(mysql2@3.6.5):
-    resolution: {integrity: sha512-yItc4unfHnk8XkDD3/bdC63vdboTY7e7I03lCF1OJYABXSIfQYU9BFTQJXMMovVeb3T1/OJWwfW/70T1XPnuUA==}
-    peerDependencies:
-      '@aws-sdk/client-rds-data': '>=3'
-      '@cloudflare/workers-types': '>=3'
-      '@libsql/client': '*'
-      '@neondatabase/serverless': '>=0.1'
-      '@opentelemetry/api': ^1.4.1
-      '@planetscale/database': '>=1'
-      '@types/better-sqlite3': '*'
-      '@types/pg': '*'
-      '@types/sql.js': '*'
-      '@vercel/postgres': '*'
-      better-sqlite3: '>=7'
-      bun-types: '*'
-      knex: '*'
-      kysely: '*'
-      mysql2: '>=2'
-      pg: '>=8'
-      postgres: '>=3'
-      sql.js: '>=1'
-      sqlite3: '>=5'
-    peerDependenciesMeta:
-      '@aws-sdk/client-rds-data':
-        optional: true
-      '@cloudflare/workers-types':
-        optional: true
-      '@libsql/client':
-        optional: true
-      '@neondatabase/serverless':
-        optional: true
-      '@opentelemetry/api':
-        optional: true
-      '@planetscale/database':
-        optional: true
-      '@types/better-sqlite3':
-        optional: true
-      '@types/pg':
-        optional: true
-      '@types/sql.js':
-        optional: true
-      '@vercel/postgres':
-        optional: true
-      better-sqlite3:
-        optional: true
-      bun-types:
-        optional: true
-      knex:
-        optional: true
-      kysely:
-        optional: true
-      mysql2:
-        optional: true
-      pg:
-        optional: true
-      postgres:
-        optional: true
-      sql.js:
-        optional: true
-      sqlite3:
-        optional: true
-    dependencies:
-      mysql2: 3.6.5
-    dev: false
-
   /eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
     dev: true
@@ -6300,7 +6222,7 @@ packages:
       semver: 7.5.4
       tapable: 2.2.1
       typescript: 5.2.2
-      webpack: 5.89.0(esbuild@0.19.10)
+      webpack: 5.89.0
     dev: true
 
   /fork-ts-checker-webpack-plugin@9.0.2(typescript@5.3.3)(webpack@5.89.0):
@@ -9910,40 +9832,6 @@ packages:
       yargs-parser: 21.1.1
     dev: true
 
-  /ts-jest@29.1.1(@babel/core@7.23.6)(jest@29.7.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-D6xjnnbP17cC85nliwGiL+tpoKN0StpgE0TeOjXQTU6MVCfsB4v7aW05CgQ/1OywGb0x/oy9hHFnN+sczTiRaA==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    hasBin: true
-    peerDependencies:
-      '@babel/core': '>=7.0.0-beta.0 <8'
-      '@jest/types': ^29.0.0
-      babel-jest: ^29.0.0
-      esbuild: '*'
-      jest: ^29.0.0
-      typescript: '>=4.3 <6'
-    peerDependenciesMeta:
-      '@babel/core':
-        optional: true
-      '@jest/types':
-        optional: true
-      babel-jest:
-        optional: true
-      esbuild:
-        optional: true
-    dependencies:
-      '@babel/core': 7.23.6
-      bs-logger: 0.2.6
-      fast-json-stable-stringify: 2.1.0
-      jest: 29.7.0(@types/node@20.10.7)(ts-node@10.9.2)
-      jest-util: 29.7.0
-      json5: 2.2.3
-      lodash.memoize: 4.1.2
-      make-error: 1.3.6
-      semver: 7.5.4
-      typescript: 5.3.3
-      yargs-parser: 21.1.1
-    dev: true
-
   /ts-loader@9.5.1(typescript@5.2.2)(webpack@5.89.0):
     resolution: {integrity: sha512-rNH3sK9kGZcH9dYzC7CewQm4NtxJTjSEVRJ2DyBZR7f8/wcta+iV44UPCXc5+nzDzivKtlzV6c9P4e+oFhDLYg==}
     engines: {node: '>=12.0.0'}
@@ -9973,7 +9861,7 @@ packages:
       semver: 7.5.4
       source-map: 0.7.4
       typescript: 5.3.3
-      webpack: 5.89.0(esbuild@0.19.10)
+      webpack: 5.89.0
     dev: true
 
   /ts-morph@21.0.1:
