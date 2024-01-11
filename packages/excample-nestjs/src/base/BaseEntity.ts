@@ -29,6 +29,7 @@ export abstract class BaseEntity {
   @ApiProperty()
   @Property({
     name: 'created_at',
+    comment: '创建时间',
     // type: new BigIntType('bigint'),
   })
   createdAt: number;
@@ -38,6 +39,7 @@ export abstract class BaseEntity {
   @Property({
     name: 'updated_at',
     nullable: true,
+    comment: '更新时间',
     // type: new BigIntType('bigint'),
   })
   updatedAt: number;

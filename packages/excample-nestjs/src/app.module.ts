@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { SetupModule } from './setup/setup.module';
 
-import { UserModule } from './modules/user/user.module';
-import { CollectionModule } from './modules/collection/collection.module';
-import { HistoryModule } from './modules/history/history.module';
-import { ComicModule } from './modules/comic/comic.module';
-import { ComicChapterModule } from './modules/comic-chapter/comic-chapter.module';
-import { ComicChapterContentModule } from './modules/comic-chapter-content/comic-chapter-content.module';
+import { UserModule } from './modules/app/user/user.module';
+import { CollectionModule } from './modules/app/collection/collection.module';
+import { HistoryModule } from './modules/app/history/history.module';
+import { ComicModule } from './modules/app/comic/comic.module';
+import { ComicChapterModule } from './modules/app/comic-chapter/comic-chapter.module';
+import { ComicChapterContentModule } from './modules/app/comic-chapter-content/comic-chapter-content.module';
 
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { ComicChapterContentModule } from './modules/comic-chapter-content/comic
     UserModule,
     // CollectionModule,
     // HistoryModule,
-    // ComicModule,
+    ComicModule,
     // ComicChapterModule,
     // ComicChapterContentModule,
   ],

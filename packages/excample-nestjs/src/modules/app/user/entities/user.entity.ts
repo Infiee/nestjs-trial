@@ -5,14 +5,22 @@ import { BaseEntity } from 'src/base/BaseEntity';
 @Entity({ tableName: 'user' })
 export class User extends BaseEntity {
   @ApiProperty()
-  @Property()
+  @Property({
+    comment: '用户名',
+  })
   username: string;
 
   @ApiHideProperty()
-  @Property({ hidden: true }) // Equivalent of class-transformer's `@Exclude`
+  @Property({
+    hidden: true, // 等价于 class-transformer的 `@Exclude`
+    comment: '密码',
+  })
   password: string;
 
   @ApiProperty()
-  @Property({ nullable: true })
+  @Property({
+    nullable: true,
+    comment: '邮箱',
+  })
   email: string;
 }

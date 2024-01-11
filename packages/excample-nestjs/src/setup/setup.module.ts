@@ -1,5 +1,5 @@
 import { INestApplication, Module } from '@nestjs/common';
-import { AppConfigModule } from 'src/config/app-config.module';
+import { AppConfigModule } from 'src/setup/config/app-config.module';
 import { DatabaseModule } from 'src/setup/database/database.module';
 import { SwaggerDocModule } from './swagger-doc/swagger-doc.module';
 import security from './security/security';
