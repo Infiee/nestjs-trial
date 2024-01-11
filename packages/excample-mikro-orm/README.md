@@ -1,5 +1,7 @@
 ### 开发测试使用
 
+mikro-orm.config.ts必须创建，@mikro-orm/cli需要配置文件
+
 // --run参数会执行sql，--dump参数会打印sql但是不执行
 // 创建数据库
 mikro-orm schema:create --run

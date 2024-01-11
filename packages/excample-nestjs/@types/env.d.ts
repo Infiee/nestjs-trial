@@ -7,7 +7,8 @@ declare global {
       NODE_ENV: 'development' | 'production';
 
       /** 数据库 */
-      DATABASE_PG_URL: string;
+      DATABASE_MYSQL_URL: string;
+      DATABASE_MYSQL_DB_NAME: string;
 
       /** REDIS */
       REDIS_HOST: string;

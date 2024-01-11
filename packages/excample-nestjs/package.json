@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "DOTENV_CONFIG_PATH=.env.development NODE_ENV=development nest start --watch",
+    "start:dev": "NODE_ENV=development nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -17,12 +17,18 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "mikro-update:dev": "NODE_ENV=development mikro-orm schema:update --run"
   },
   "dependencies": {
     "@mikro-orm/core": "^6.0.1",
+    "@mikro-orm/entity-generator": "^6.0.1",
+    "@mikro-orm/migrations": "^6.0.1",
     "@mikro-orm/mysql": "^6.0.1",
     "@mikro-orm/nestjs": "^5.2.3",
+    "@mikro-orm/reflection": "^6.0.1",
+    "@mikro-orm/seeder": "^6.0.1",
+    "@mikro-orm/sql-highlighter": "^1.0.1",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
@@ -36,6 +42,7 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "@mikro-orm/cli": "^6.0.1",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
