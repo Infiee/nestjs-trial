@@ -6,16 +6,18 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   imports: [
     MikroOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        // type: configService.get(""),
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: 'root',
-        database: 'test',
-        entities: [],
-        synchronize: true,
-      }),
+      useFactory: (configService: ConfigService) => {
+        console.log('configService----', configService);
+        return {};
+      },
+      // useFactory: (configService: ConfigService) => ({
+      //   // type: configService.get(""),
+      //   // driver
+      //   clientUrl: 'mysql://root:root@localhost:3306/test_nestjs',
+      //   entities: ['./dist/**/*.entity.js'],
+      //   entitiesTs: ['./src/**/*.entity.ts'],
+      //   debug: true,
+      // }),
     }),
   ],
 })

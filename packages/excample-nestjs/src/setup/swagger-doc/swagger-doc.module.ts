@@ -6,7 +6,9 @@ import { ConfigService } from '@nestjs/config';
 export class SwaggerDocModule {
   setup(app: INestApplication) {
     const configService = app.get(ConfigService);
-    if (!configService.get('apiDocs.enable')) {
+    // 如果不开启swagger
+    console.log('configService', configService.get('swagger.enable'));
+    if (configService.get('swagger.enable') !== 'true') {
       return;
     }
 

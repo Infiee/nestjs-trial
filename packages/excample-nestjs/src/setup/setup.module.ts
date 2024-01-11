@@ -9,5 +9,6 @@ export class SetupModule {
   async setup(app: INestApplication) {
     await app.get(SwaggerDocModule).setup(app);
     security(app);
+    console.log('setupl ------');
   }
 }

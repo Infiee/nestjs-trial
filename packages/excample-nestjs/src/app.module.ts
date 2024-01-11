@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppConfigModule } from './config/app-config.module';
+import { SetupModule } from './setup/setup.module';
+
 import { UserModule } from './modules/user/user.module';
 import { CollectionModule } from './modules/collection/collection.module';
 import { HistoryModule } from './modules/history/history.module';
@@ -10,12 +12,13 @@ import { ComicChapterContentModule } from './modules/comic-chapter-content/comic
 @Module({
   imports: [
     AppConfigModule,
+    SetupModule,
     UserModule,
-    CollectionModule,
-    HistoryModule,
-    ComicModule,
-    ComicChapterModule,
-    ComicChapterContentModule,
+    // CollectionModule,
+    // HistoryModule,
+    // ComicModule,
+    // ComicChapterModule,
+    // ComicChapterContentModule,
   ],
   controllers: [],
   providers: [],
