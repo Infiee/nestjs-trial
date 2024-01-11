@@ -4,6 +4,7 @@ import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { Migrator } from '@mikro-orm/migrations';
 import { EntityGenerator } from '@mikro-orm/entity-generator';
 import { SeedManager } from '@mikro-orm/seeder';
+// import { logger } from '@mikro-orm/nestjs';
 
 export default defineConfig({
   host: 'localhost',
@@ -14,6 +15,7 @@ export default defineConfig({
   entities: ['./dist/**/*.entity.js'],
   entitiesTs: ['./src/**/*.entity.ts'],
   debug: true,
+  // logger: logger.log.bind(logger),
   highlighter: new SqlHighlighter(),
   metadataProvider: TsMorphMetadataProvider,
   // @ts-expect-error nestjs adapter option

@@ -7,7 +7,7 @@
 - 验证和属性剥离class-validator、class-transformer
 - 日志 winston最简单 有自动切分日志、pino需要额外配置一些库但性能优于winston
 
-### 项目技术栈
+## 项目技术栈
 
 - orm：mikro-orm（初步试用了下觉着比typeorm的api设计的好一些）
 - 数据库：mysql（虽然现在国外大部分都在推Pg，但国内估计还是mysql比较多）
@@ -57,11 +57,4 @@ module.exports = {
 }  
 ```
 
-### issues跟进
-
-<https://github.com/drizzle-team/drizzle-orm/issues/1592>
-
 ### 相关链接
-
-- <https://node-postgres.com/apis/cursor>
-- <https://github.com/porsager/postgres>

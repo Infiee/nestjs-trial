@@ -6,6 +6,7 @@ import { Migrator } from '@mikro-orm/migrations';
 // 实体生成器
 import { EntityGenerator } from '@mikro-orm/entity-generator';
 import { SeedManager } from '@mikro-orm/seeder';
+// import { logger } from '@mikro-orm/nestjs';
 
 // dotenv.config()
 // if (process.env.NODE_ENV === 'development') {
@@ -20,6 +21,7 @@ export default defineConfig({
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
   debug: true,
+  // logger: logger.log.bind(logger),
   highlighter: new SqlHighlighter(),
   metadataProvider: TsMorphMetadataProvider,
   // @ts-expect-error nestjs adapter option
