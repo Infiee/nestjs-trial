@@ -6,6 +6,7 @@ import { DictData } from './entities/dict-data.entity';
 import { CreateDictDataDto } from './dto/create-dict-data.dto';
 import { UpdateDictDataDto } from './dto/update-dict-data.dto';
 import { DictTypeService } from '../dict-type/dict-type.service';
+import { EntityManager } from '@mikro-orm/mysql';
 
 @Injectable()
 export class DictDataService {
@@ -13,6 +14,7 @@ export class DictDataService {
     @InjectRepository(DictData)
     private readonly repository: EntityRepository<DictData>,
     private readonly dictTypeService: DictTypeService,
+    private readonly em: EntityManager,
   ) {}
 
   async create(createDto: CreateDictDataDto) {
@@ -24,14 +26,14 @@ export class DictDataService {
       throw new HttpException('字典类型不存在', HttpStatus.BAD_REQUEST);
     }
     const data = await this.repository.create(createDto);
-    await this.repository.getEntityManager().flush();
+    await this.em.flush();
     return data;
   }
 
   async findAll(query: BasePaginationDto) {
     const [items, total] = await this.repository.findAndCount(
       {},
-      { limit: +query.limit, offset: +query.offset },
+      { limit: +query.limit, offset: +query.offset, fields: ['dictLabel'] },
     );
     return {
       items,
@@ -46,13 +48,13 @@ export class DictDataService {
   async update(id: number, updateDto: UpdateDictDataDto) {
     const data = await this.repository.findOneOrFail(id);
     const updateUser = wrap(data).assign(updateDto);
-    await this.repository.getEntityManager().flush();
+    await this.em.flush();
     return updateUser;
   }
 
   async remove(id: number) {
     const data = await this.repository.findOneOrFail(id);
-    await this.repository.getEntityManager().remove(data).flush();
+    await this.em.remove(data).flush();
     return data;
   }
 
@@ -61,8 +63,8 @@ export class DictDataService {
     const users = await this.repository.find({
       id: { $in: ids },
     });
-    this.repository.getEntityManager().remove(users);
-    await this.repository.getEntityManager().flush();
+    this.em.remove(users);
+    await this.em.flush();
     return users;
   }
 }

@@ -21,7 +21,9 @@ export class UsersService {
   async findAll() {
     const [items, total] = await this.userRepository.findAndCount(
       {},
-      { limit: 10, offset: 0 },
+      // { limit: 10, offset: 0 },
+      // TODO: 选择部分字段
+      { limit: 10, offset: 0, fields: ['username'] },
     );
     return {
       items,
