@@ -12,7 +12,7 @@ import dayjs from 'dayjs';
 export abstract class BaseEntity {
   @ApiProperty()
   @PrimaryKey()
-  id!: number;
+  id: number;
 
   // @ApiProperty()
   // @Property()
